@@ -13,31 +13,92 @@ else {
     var doc = app.activeDocument;
 
     // Checken, ob Absatzformat überhaupt existiert
-    if (app.activeDocument.paragraphStyles.itemByName("speakers").isValid) {
-        // Starte Loop durch alle Seiten des Doks
-        for (var i = 0; i < doc.pages.length; i++) {
-            var page = doc.pages.item(i);  // Aktuelle Seite
-            // Durch alle Textrahmen der Seite iterieren
-            for (var j = 0; j < page.textFrames.length; j++) {
-                var textFrame = page.textFrames[j];  // Aktueller Textrahmen
-                // Durch alle Absätze im Textrahmen iterieren
-                for (var k = 0; k < textFrame.paragraphs.length; k++) {
-                    var paragraph = textFrame.paragraphs[k];  // Aktueller Absatz
-                    // Prüfen, ob der Absatz das Absatzformat "SPEAKERS" hat
-                    if (paragraph.appliedParagraphStyle.name == "speakers") {
-                        var speakerName = paragraph.contents
-                        alert(speakerName);
-                        // Kürze den Text auf den Namen (alles nach der öffnenden Klammer fliegt weg)
-                        var speakerName_trimmed = speakerName.split("(")[0];
-                        alert(speakerName_trimmed);
+    if (doc.paragraphStyles.itemByName("speakers").isValid) {
+        // Checken, ob Objektformat überhaupt existiert
+        if (doc.objectStyles.itemByName("speakerBild").isValid) {
+            // Starte Loop durch alle Seiten des Doks
+            for (var i = 0; i < doc.pages.length; i++) {
+                var page = doc.pages.item(i);  // Aktuelle Seite
+                // Durch alle Textrahmen der Seite iterieren
+                for (var j = 0; j < page.textFrames.length; j++) {
+                    var textFrame = page.textFrames[j];  // Aktueller Textrahmen
+                    // Durch alle Absätze im Textrahmen iterieren
+                    for (var k = 0; k < textFrame.paragraphs.length; k++) {
+                        var paragraph = textFrame.paragraphs[k];  // Aktueller Absatz
+                        // Prüfen, ob der Absatz das Absatzformat "SPEAKERS" hat
+                        if (paragraph.appliedParagraphStyle.name == "speakers") {
+                            var speakerName = paragraph.contents
+                            // alert(speakerName);
+                            // Kürze den Text auf den Namen (alles ab der öffnenden Klammer fliegt weg)
+                            var speakerName = speakerName.split("(")[0];
+                            // alert(speakerName);
+                            // Alles in Kleinbuchstaben umwandeln
+                            var speakerName = speakerName.toLowerCase();
+                            // alert(speakerName);
+                            // Umlaute ersetzen
+                            // Funktion, um die deutschen Umlaute zu ersetzen
+                            var textContent = speakerName;
+                            var replacedText = replaceGermanUmlauts(textContent);
+                            function replaceGermanUmlauts(text) {
+                                // Ersetzen der deutschen Umlaute durch ihre entsprechenden Zeichen
+                                var umlautReplacedText = text
+                                    .replace(/ä/g, 'ae')    // 'ä' wird zu 'ae'
+                                    .replace(/ö/g, 'oe')    // 'ö' wird zu 'oe'
+                                    .replace(/ü/g, 'ue')    // 'ü' wird zu 'ue'
+                                    .replace(/ß/g, 'ss')    // 'ß' wird zu 'ss'
+                                    .replace(/Ä/g, 'Ae')    // 'Ä' wird zu 'Ae'
+                                    .replace(/Ö/g, 'Oe')    // 'Ö' wird zu 'Oe'
+                                    .replace(/Ü/g, 'Ue');   // 'Ü' wird zu 'Ue'
+                                
+                                return umlautReplacedText;
+                            }
+                            speakerName = replacedText;
+                            // Vor- und Nachname vertauschen
+                            // Vorname
+                            var FirstName = speakerName.split(/\s+/)[0];
+                            // alert(FirstName);
+                            // Nachname
+                            var LastName = speakerName.split(/\s+/)[1];
+                            // alert(LastName);
+                            // Nachname + Vorname kombinieren & Wordpress-Kürzel beifügen
+                            var fileName = LastName + "_" + FirstName + "_wp_1024x1024.jpg";
+                            // alert(fileName);
+                            // Pfad zum Bild angeben
+                            var folderPath = "~/Downloads/";
+                            var filePath = new File(folderPath + "/" + fileName);
+                        }
                     }
+                }
+                // findImageFrame();
+                // ##### Speakerbild platzieren #####
+                // Prüfen, ob Speakerbild existiert
+                if (!filePath.exists) {
+                    alert("Die Bilddatei existiert nicht unter dem angegebenen Pfad: " + filePath);
+                }
+                else {
+                    // Erstellen eines kreisrunden Rahmens (Ellipse)
+                    var radius = 100; // Radius des Kreises (kann angepasst werden)
+                    var xPosition = 150; // X-Position (kann angepasst werden)
+                    var yPosition = 150; // Y-Position (kann angepasst werden)
+                    // Ellipse (kreisrunder Objektrahmen) erstellen
+                    var circleFrame = doc.ovals.add({
+                        geometricBounds: [yPosition - radius, xPosition - radius, yPosition + radius, xPosition + radius]
+                    });
+                    // Bild in den Textrahmen platzieren
+                    var placedImage = circleFrame.place(filePath)[0];
+                    var objectStyle = doc.objectStyles.itemByName("speakerBild");
+                    circleFrame.appliedObjectStyle = objectStyle;
+                    // Bild auf die Größe des Rahmens skalieren (optional)
+                    placedImage.fit(FitOptions.FILL_PROPORTIONALLY);
                 }
             }
         }
-
+        else {
+            alert("Das benötigte Objektformat 'speakerBild' existiert nicht. Bitte erstellen, zuweisen und Skript neu starten.");
+        }
     }
     else {
-        alert("Das benötigte Absatzformat 'speakers' existiert nicht. Bitte erstellen und Skript neu starten.");
+        alert("Das benötigte Absatzformat 'speakers' existiert nicht. Bitte erstellen, zuweisen und Skript neu starten.");
     }
 
 }
