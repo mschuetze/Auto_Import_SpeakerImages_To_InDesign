@@ -17,8 +17,10 @@ else {
         // Checken, ob Objektformat überhaupt existiert
         if (doc.objectStyles.itemByName("speakerBild").isValid) {
             // Starte Loop durch alle Seiten des Doks
+            // alert("Seitenanzahl: " + doc.pages.length);
             for (var i = 0; i < doc.pages.length; i++) {
-                var page = doc.pages.item(i);  // Aktuelle Seite
+                var page = doc.pages[i];  // Aktuelle Seite
+                // alert("Seite: " + i);
                 // Durch alle Textrahmen der Seite iterieren
                 for (var j = 0; j < page.textFrames.length; j++) {
                     var textFrame = page.textFrames[j];  // Aktueller Textrahmen
@@ -63,9 +65,43 @@ else {
                             // Nachname + Vorname kombinieren & Wordpress-Kürzel beifügen
                             var fileName = LastName + "_" + FirstName + "_wp_1024x1024.jpg";
                             // alert(fileName);
-                            // Pfad zum Bild angeben
-                            var folderPath = "~/Downloads/";
-                            var filePath = new File(folderPath + "/" + fileName);
+                            // Pfad zum Bild angeben – dieser Teil ist immer gleich
+                            var folderPath_static = "/Volumes/GRAFIK/Grafik1/Speaker- und Autorenbilder/";
+                            // Pfad zum Bild angeben – dieser Teil variiert je nach Nachname
+                            // Ersten Buchstaben erfassen – dieser bestimmt den Pfad zum Speakerbild
+                            var firstLetter = fileName.charAt(0);
+                            // alert(firstLetter);
+                            if (firstLetter === "a" || firstLetter === "b" || firstLetter === "c") {
+                                var folderPath_variable = "abc/";
+                            }
+                            else if (firstLetter === "d" || firstLetter === "e" || firstLetter === "f") {
+                                var folderPath_variable = "def/";
+                            }
+                            else if (firstLetter === "g" || firstLetter === "h" || firstLetter === "i") {
+                                var folderPath_variable = "ghi/";
+                            }
+                            else if (firstLetter === "j" || firstLetter === "k" || firstLetter === "l") {
+                                var folderPath_variable = "jkl/";
+                            }
+                            else if (firstLetter === "m" || firstLetter === "n" || firstLetter === "o") {
+                                var folderPath_variable = "mno/";
+                            }
+                            else if (firstLetter === "p" || firstLetter === "q" || firstLetter === "r") {
+                                var folderPath_variable = "pqr/";
+                            }
+                            else if (firstLetter === "s" || firstLetter === "t") {
+                                var folderPath_variable = "st/";
+                            }
+                            else if (firstLetter === "u" || firstLetter === "v" || firstLetter === "w") {
+                                var folderPath_variable = "uvw/";
+                            }
+                            else if (firstLetter === "x" || firstLetter === "y" || firstLetter === "z") {
+                                var folderPath_variable = "xyz/";
+                            }
+                            // Statischen + variablen Teil des Pfades zusammenfügen
+                            var folderPath = folderPath_static + folderPath_variable
+                            // alert(folderPath);
+                            var filePath = new File(folderPath + fileName);
                         }
                     }
                 }
@@ -81,7 +117,7 @@ else {
                     var xPosition = 150; // X-Position (kann angepasst werden)
                     var yPosition = 150; // Y-Position (kann angepasst werden)
                     // Ellipse (kreisrunder Objektrahmen) erstellen
-                    var circleFrame = doc.ovals.add({
+                    var circleFrame = page.ovals.add({
                         geometricBounds: [yPosition - radius, xPosition - radius, yPosition + radius, xPosition + radius]
                     });
                     // Bild in den Textrahmen platzieren
