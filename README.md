@@ -12,4 +12,5 @@ Script for Adobe InDesign that will import/place an image for each speaker from 
   - Convert German Umlaute to their respective EN-compliant version.
   - Change order of first & last name.
   - Add string "_wp_1024x1024.jpg" at the end.
+- Get first character of last name to get the correct server path of the spaker image
 - Place image in circular frame and give it the format **"speakerBild"** (which sets position + width/height).
