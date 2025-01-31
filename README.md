@@ -4,6 +4,7 @@ Script for Adobe InDesign that will import/place an image for each speaker from 
 ## What it does
 - Check if document is already open – if not, throw error and stop script.
 - Check if paragraph style **"speakers"** exists in the document – if not, throw error and stop script.
+- Check if object style **"speakerBild"** exists in the document – if not, throw error and stop script.
 - Loop through each page and find paragraph with style **"speakers"**.
 - Copy content of found paragraph to variable.
 - Modify content of variable so it matches our speaker-image naming schema: 
