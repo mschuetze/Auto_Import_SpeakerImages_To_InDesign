@@ -1,4 +1,4 @@
-// v0.1.0
+// v0.2.0
 
 // vorsichtshalber die Dialoge einschalten
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
@@ -62,9 +62,12 @@ else {
                             // Nachname
                             var LastName = speakerName.split(/\s+/)[1];
                             // alert(LastName);
-                            // Nachname + Vorname kombinieren & Wordpress-Kürzel beifügen
-                            var fileName = LastName + "_" + FirstName + "_wp_1024x1024.jpg";
-                            // alert(fileName);
+                            // Dateiname für Freisteller erzeugen
+                            var fileName_frei = LastName + "_" + FirstName + "_frei.png";
+                            // alert(fileName_frei);
+                            // Dateiname für Wordpress erzeugen
+                            var fileName_wp = LastName + "_" + FirstName + "_wp_1024x1024.jpg";
+                            // alert(fileName_wp);
                             // Pfad zum Bild angeben – dieser Teil ist immer gleich
                             var folderPath_static = "/Volumes/GRAFIK/Grafik1/Speaker- und Autorenbilder/";
                             // Pfad zum Bild angeben – dieser Teil variiert je nach Nachname
@@ -101,31 +104,47 @@ else {
                             // Statischen + variablen Teil des Pfades zusammenfügen
                             var folderPath = folderPath_static + folderPath_variable
                             // alert(folderPath);
-                            var filePath = new File(folderPath + fileName);
+                            // Dateipfad für Freisteller erzeugen
+                            var filePath_frei = new File(folderPath + fileName_frei);
+                            // Dateipfad für Wordpress erzeugen
+                            var filePath_wp = new File(folderPath + fileName_wp);
                         }
                     }
                 }
-                // findImageFrame();
                 // ##### Speakerbild platzieren #####
                 // Prüfen, ob Speakerbild existiert
-                if (!filePath.exists) {
-                    alert("Die Bilddatei existiert nicht unter dem angegebenen Pfad: " + filePath);
-                }
-                else {
-                    // Erstellen eines kreisrunden Rahmens (Ellipse)
-                    var radius = 100; // Radius des Kreises (kann angepasst werden)
-                    var xPosition = 150; // X-Position (kann angepasst werden)
-                    var yPosition = 150; // Y-Position (kann angepasst werden)
-                    // Ellipse (kreisrunder Objektrahmen) erstellen
-                    var circleFrame = page.ovals.add({
-                        geometricBounds: [yPosition - radius, xPosition - radius, yPosition + radius, xPosition + radius]
+                if (filePath_frei.exists) {
+                    // Rahmen für das Bild erstellen (Rechteck)
+                    var squareFrame = page.rectangles.add({
+                        geometricBounds: ["24px", "24px", "124px", "124px"] // Position und Größe des Rahmens (oben, links, unten, rechts)
                     });
                     // Bild in den Textrahmen platzieren
-                    var placedImage = circleFrame.place(filePath)[0];
-                    var objectStyle = doc.objectStyles.itemByName("speakerBild");
-                    circleFrame.appliedObjectStyle = objectStyle;
+                    var placedImage = squareFrame.place(filePath_frei)[0];
+                    // var objectStyle = doc.objectStyles.itemByName("speakerBild_frei");
+                    squareFrame.appliedObjectStyle = objectStyle;
                     // Bild auf die Größe des Rahmens skalieren (optional)
                     placedImage.fit(FitOptions.FILL_PROPORTIONALLY);
+                }
+                else {
+                    if (filePath_wp.exists) {
+                        // Erstellen eines kreisrunden Rahmens (Ellipse)
+                        var radius = 100; // Radius des Kreises (kann angepasst werden)
+                        var xPosition = 150; // X-Position (kann angepasst werden)
+                        var yPosition = 150; // Y-Position (kann angepasst werden)
+                        // Ellipse (kreisrunder Objektrahmen) erstellen
+                        var circleFrame = page.ovals.add({
+                            geometricBounds: [yPosition - radius, xPosition - radius, yPosition + radius, xPosition + radius]
+                        });
+                        // Bild in den Textrahmen platzieren
+                        var placedImage = circleFrame.place(filePath_wp)[0];
+                        var objectStyle = doc.objectStyles.itemByName("speakerBild");
+                        circleFrame.appliedObjectStyle = objectStyle;
+                        // Bild auf die Größe des Rahmens skalieren (optional)
+                        placedImage.fit(FitOptions.FILL_PROPORTIONALLY);
+                    }
+                    else {
+                        alert("Die Bilddatei existiert nicht unter dem angegebenen Pfad: " + filePath_frei + filePath_wp);
+                    }
                 }
             }
         }
