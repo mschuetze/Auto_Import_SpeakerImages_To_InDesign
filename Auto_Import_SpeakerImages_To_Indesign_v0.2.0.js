@@ -72,7 +72,7 @@ else {
                             var folderPath_static = "/Volumes/GRAFIK/Grafik1/Speaker- und Autorenbilder/";
                             // Pfad zum Bild angeben – dieser Teil variiert je nach Nachname
                             // Ersten Buchstaben erfassen – dieser bestimmt den Pfad zum Speakerbild
-                            var firstLetter = fileName.charAt(0);
+                            var firstLetter = fileName_frei.charAt(0);
                             // alert(firstLetter);
                             if (firstLetter === "a" || firstLetter === "b" || firstLetter === "c") {
                                 var folderPath_variable = "abc/";
@@ -121,7 +121,7 @@ else {
                     // Bild in den Textrahmen platzieren
                     var placedImage = frame.place(filePath_frei)[0];
                     // var objectStyle = doc.objectStyles.itemByName("speakerBild_frei");
-                    frame.appliedObjectStyle = objectStyle;
+                    // frame.appliedObjectStyle = objectStyle;
                     // Bild auf die Größe des Rahmens skalieren (optional)
                     placedImage.fit(FitOptions.FRAME_TO_CONTENT);
                 }
