@@ -115,35 +115,31 @@ else {
                 // Prüfen, ob Speakerbild existiert
                 if (filePath_frei.exists) {
                     // Rahmen für das Bild erstellen (Rechteck)
-                    var squareFrame = page.rectangles.add({
+                    var frame = page.rectangles.add({
                         geometricBounds: ["24px", "24px", "124px", "124px"] // Position und Größe des Rahmens (oben, links, unten, rechts)
                     });
                     // Bild in den Textrahmen platzieren
-                    var placedImage = squareFrame.place(filePath_frei)[0];
+                    var placedImage = frame.place(filePath_frei)[0];
                     // var objectStyle = doc.objectStyles.itemByName("speakerBild_frei");
-                    squareFrame.appliedObjectStyle = objectStyle;
+                    frame.appliedObjectStyle = objectStyle;
                     // Bild auf die Größe des Rahmens skalieren (optional)
-                    placedImage.fit(FitOptions.FILL_PROPORTIONALLY);
+                    placedImage.fit(FitOptions.FRAME_TO_CONTENT);
                 }
                 else {
                     if (filePath_wp.exists) {
-                        // Erstellen eines kreisrunden Rahmens (Ellipse)
-                        var radius = 100; // Radius des Kreises (kann angepasst werden)
-                        var xPosition = 150; // X-Position (kann angepasst werden)
-                        var yPosition = 150; // Y-Position (kann angepasst werden)
-                        // Ellipse (kreisrunder Objektrahmen) erstellen
-                        var circleFrame = page.ovals.add({
-                            geometricBounds: [yPosition - radius, xPosition - radius, yPosition + radius, xPosition + radius]
+                        // Rahmen für das Bild erstellen (Rechteck)
+                        var frame = page.rectangles.add({
+                            geometricBounds: ["24px", "24px", "124px", "124px"] // Position und Größe des Rahmens (oben, links, unten, rechts)
                         });
                         // Bild in den Textrahmen platzieren
-                        var placedImage = circleFrame.place(filePath_wp)[0];
+                        var placedImage = frame.place(filePath_wp)[0];
                         var objectStyle = doc.objectStyles.itemByName("speakerBild");
-                        circleFrame.appliedObjectStyle = objectStyle;
+                        frame.appliedObjectStyle = objectStyle;
                         // Bild auf die Größe des Rahmens skalieren (optional)
                         placedImage.fit(FitOptions.FILL_PROPORTIONALLY);
                     }
                     else {
-                        alert("Die Bilddatei existiert nicht unter dem angegebenen Pfad: " + filePath_frei + filePath_wp);
+                        // alert("Die Bilddatei existiert nicht unter dem angegebenen Pfad: " + filePath_frei + filePath_wp);
                     }
                 }
             }
