@@ -1,4 +1,4 @@
-// v0.2.0
+// v0.3.0
 
 // vorsichtshalber die Dialoge einschalten
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
@@ -15,7 +15,7 @@ else {
     // Checken, ob Absatzformat überhaupt existiert
     if (doc.paragraphStyles.itemByName("speakers").isValid) {
         // Checken, ob Objektformat überhaupt existiert
-        if (doc.objectStyles.itemByName("speakerBild").isValid) {
+        if ((doc.objectStyles.itemByName("speakerBild_frei").isValid) && (doc.objectStyles.itemByName("speakerBild_wp").isValid)) {
             // Starte Loop durch alle Seiten des Doks
             // alert("Seitenanzahl: " + doc.pages.length);
             for (var i = 0; i < doc.pages.length; i++) {
@@ -120,21 +120,25 @@ else {
                     });
                     // Bild in den Textrahmen platzieren
                     var placedImage = frame.place(filePath_frei)[0];
-                    // var objectStyle = doc.objectStyles.itemByName("speakerBild_frei");
-                    // frame.appliedObjectStyle = objectStyle;
+                    var objectStyle = doc.objectStyles.itemByName("speakerBild_frei");
+                    frame.appliedObjectStyle = objectStyle;
                     // Bild auf die Größe des Rahmens skalieren (optional)
-                    placedImage.fit(FitOptions.FRAME_TO_CONTENT);
+                    placedImage.fit(FitOptions.FILL_PROPORTIONALLY);
                 }
                 else {
                     if (filePath_wp.exists) {
-                        // Rahmen für das Bild erstellen (Rechteck)
-                        var frame = page.rectangles.add({
-                            geometricBounds: ["24px", "24px", "124px", "124px"] // Position und Größe des Rahmens (oben, links, unten, rechts)
+                        // Erstellen eines kreisrunden Rahmens (Ellipse)
+                        var radius = 100; // Radius des Kreises (kann angepasst werden)
+                        var xPosition = 150; // X-Position (kann angepasst werden)
+                        var yPosition = 150; // Y-Position (kann angepasst werden)
+                        // Ellipse (kreisrunder Objektrahmen) erstellen
+                        var circleFrame = page.ovals.add({
+                            geometricBounds: [yPosition - radius, xPosition - radius, yPosition + radius, xPosition + radius]
                         });
                         // Bild in den Textrahmen platzieren
-                        var placedImage = frame.place(filePath_wp)[0];
-                        var objectStyle = doc.objectStyles.itemByName("speakerBild");
-                        frame.appliedObjectStyle = objectStyle;
+                        var placedImage = circleFrame.place(filePath_wp)[0];
+                        var objectStyle = doc.objectStyles.itemByName("speakerBild_wp");
+                        circleFrame.appliedObjectStyle = objectStyle;
                         // Bild auf die Größe des Rahmens skalieren (optional)
                         placedImage.fit(FitOptions.FILL_PROPORTIONALLY);
                     }
@@ -145,7 +149,7 @@ else {
             }
         }
         else {
-            alert("Das benötigte Objektformat 'speakerBild' existiert nicht. Bitte erstellen, zuweisen und Skript neu starten.");
+            alert("Die benötigten Objektformate 'speakerBild_frei' und 'speakerBild_wp' existieren nicht. Bitte erstellen, zuweisen und Skript neu starten.");
         }
     }
     else {
