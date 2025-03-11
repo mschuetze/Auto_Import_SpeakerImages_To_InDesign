@@ -1,4 +1,4 @@
-// v0.3.0
+// v0.4.0
 
 // vorsichtshalber die Dialoge einschalten
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
@@ -31,12 +31,33 @@ else {
                         if (paragraph.appliedParagraphStyle.name == "speakers") {
                             var speakerName = paragraph.contents
                             // alert(speakerName);
+                            
+                            // ### SPEAKERNAMEN IM DOK ANPASSEN: START ###
+
+                            // Ersetze die öffnende Klammer durch eine Pipe
+                            var speakerName_doc = speakerName.replace(/\(/g, '| ');
+                            // alert(speakerName_doc);
+
+                            // Entferne die schließende Klammer
+                            var speakerName_doc = speakerName_doc.replace(/\)/g, '');
+                            // alert(speakerName_doc);
+                            
+                            // angepassten Namen im Absatz einfügen
+                            paragraph.contents = speakerName_doc
+
+                            // ### SPEAKERNAMEN IM DOK ANPASSEN: ENDE ###
+
+
+
+                            // ### SPEAKERNAMEN FÜR ABBILDUNG: START ###
                             // Kürze den Text auf den Namen (alles ab der öffnenden Klammer fliegt weg)
                             var speakerName = speakerName.split("(")[0];
                             // alert(speakerName);
+
                             // Alles in Kleinbuchstaben umwandeln
                             var speakerName = speakerName.toLowerCase();
                             // alert(speakerName);
+                            
                             // Umlaute ersetzen
                             // Funktion, um die deutschen Umlaute zu ersetzen
                             var textContent = speakerName;
