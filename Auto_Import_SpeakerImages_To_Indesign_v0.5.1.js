@@ -1,4 +1,4 @@
-// v0.4.0
+// v0.5.1
 
 // vorsichtshalber die Dialoge einschalten
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
@@ -13,7 +13,7 @@ else {
     var doc = app.activeDocument;
 
     // Checken, ob Absatzformat überhaupt existiert
-    if (doc.paragraphStyles.itemByName("speakers").isValid) {
+    if ((doc.paragraphStyles.itemByName("title").isValid) && (doc.paragraphStyles.itemByName("speakers").isValid)) {
         // Checken, ob Objektformat überhaupt existiert
         if ((doc.objectStyles.itemByName("speakerBild_frei").isValid) && (doc.objectStyles.itemByName("speakerBild_wp").isValid)) {
             // Starte Loop durch alle Seiten des Doks
@@ -27,8 +27,20 @@ else {
                     // Durch alle Absätze im Textrahmen iterieren
                     for (var k = 0; k < textFrame.paragraphs.length; k++) {
                         var paragraph = textFrame.paragraphs[k];  // Aktueller Absatz
+                        // Prüfen, ob der Absatz das Absatzformat "TITLE" hat
+                        if (paragraph.appliedParagraphStyle.name == "title") {
+                            // var titleContent = paragraph.contents
+                            // alert(titleContent);
+
+                            // // Kürze den Titel (alles ab der öffnenden eckigen Klammer fliegt weg)
+                            // var titleContent = titleContent.replace(/\[.*?\]/g, '');
+                            // // alert(titleContent);
+
+                            // // angepassten Titel im Absatz einfügen
+                            // paragraph.contents = titleContent
+                        }
                         // Prüfen, ob der Absatz das Absatzformat "SPEAKERS" hat
-                        if (paragraph.appliedParagraphStyle.name == "speakers") {
+                        else if (paragraph.appliedParagraphStyle.name == "speakers") {
                             var speakerName = paragraph.contents
                             // alert(speakerName);
                             
@@ -50,6 +62,7 @@ else {
 
 
                             // ### SPEAKERNAMEN FÜR ABBILDUNG: START ###
+
                             // Kürze den Text auf den Namen (alles ab der öffnenden Klammer fliegt weg)
                             var speakerName = speakerName.split("(")[0];
                             // alert(speakerName);
@@ -174,7 +187,7 @@ else {
         }
     }
     else {
-        alert("Das benötigte Absatzformat 'speakers' existiert nicht. Bitte erstellen, zuweisen und Skript neu starten.");
+        alert("Die benötigten Absatzformate 'title' und 'speakers' existiert nicht. Bitte erstellen, zuweisen und Skript neu starten.");
     }
 
 }
