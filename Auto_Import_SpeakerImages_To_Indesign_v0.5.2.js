@@ -1,4 +1,4 @@
-// v0.5.1
+// v0.5.2
 
 // vorsichtshalber die Dialoge einschalten
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
@@ -157,7 +157,7 @@ else {
                     var objectStyle = doc.objectStyles.itemByName("speakerBild_frei");
                     frame.appliedObjectStyle = objectStyle;
                     // Bild auf die Größe des Rahmens skalieren (optional)
-                    placedImage.fit(FitOptions.FILL_PROPORTIONALLY);
+                    placedImage.fit(FitOptions.PROPORTIONALLY);
                 }
                 else {
                     if (filePath_wp.exists) {
