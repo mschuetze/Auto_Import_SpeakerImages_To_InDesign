@@ -17,6 +17,7 @@ Script for Adobe InDesign that will import/place an image for each speaker from 
   - Change order of first & last name.
   - Add string "_frei.png" at the end for Freisteller-images.
   - Add string "_wp_1024x1024.jpg" at the end for Wordpress-images as fallback.
+  - Add the string “_dr” to the two previous variants to check if the author may have a doctor-title 
 - Get first character of last name to get the correct server path of the spaker image
 - Check if Freisteller-image exists.
   - If YES, place it inside a rectangle shape and apply object format **"speakerBild_frei"** (which sets position + width/height).
