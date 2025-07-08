@@ -1,4 +1,4 @@
-// v0.6.3
+// v0.6.4
 
 // vorsichtshalber die Dialoge einschalten
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
@@ -54,12 +54,12 @@ if (app.documents.length == 0) {
                             var LastName = speakerName.split(/\s+/)[1];
 
                             var fileName_frei = LastName + "_" + FirstName + "_frei.png";
+                            // alert(fileName_frei);
                             var fileName_frei_dr = LastName + "_" + FirstName + "_dr_frei.png";
                             var fileName_wp = LastName + "_" + FirstName + "_wp_1024x1024.jpg";
+                            // alert(fileName_wp);
                             var fileName_wp_dr = LastName + "_" + FirstName + "_dr_wp_1024x1024.jpg";
 
-                            alert(fileName_frei);
-                            alert(fileName_wp);
 
                             var folderPath_static = "/Volumes/GRAFIK/Grafik1/Speaker- und Autorenbilder/";
                             var firstLetter = fileName_frei.charAt(0);
@@ -78,11 +78,12 @@ if (app.documents.length == 0) {
                             var folderPath = folderPath_static + folderPath_variable;
 
                             var filePath_frei = new File(folderPath + fileName_frei);
+                            // alert(filePath_frei);
                             var filePath_frei_dr = new File(folderPath + fileName_frei_dr);
                             var filePath_wp = new File(folderPath + fileName_wp);
+                            // alert(filePath_wp);
                             var filePath_wp_dr = new File(folderPath + fileName_wp_dr);
 
-                            alert(filePath_frei);
                         }
                     }
                 }
