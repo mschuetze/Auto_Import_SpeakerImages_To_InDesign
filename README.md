@@ -13,7 +13,7 @@ Script for Adobe InDesign that will import/place an image for each speaker from 
 - Modify content of another variable so it matches our speaker-image naming schema: 
   - Trim content of variable to only include the speaker name – everything after the opening bracket (i.e. company) is removed.
   - Convert uppercase to lowercase letters.
-  - Convert German Umlaute to their respective EN-compliant version.
+  - Convert special characters (like German Umlaute) to their respective EN-compliant version.
   - Change order of first & last name.
   - Add string "_frei.png" at the end for Freisteller-images.
   - Add string "_wp_1024x1024.jpg" at the end for Wordpress-images as fallback.
