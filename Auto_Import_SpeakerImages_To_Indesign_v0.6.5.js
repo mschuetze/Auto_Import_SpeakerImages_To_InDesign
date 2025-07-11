@@ -1,4 +1,4 @@
-// v0.6.4
+// v0.6.5
 
 // vorsichtshalber die Dialoge einschalten
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
@@ -14,13 +14,57 @@ function cleanString(text) {
 // Funktion, um die deutschen Umlaute zu ersetzen
 function replaceGermanUmlauts(text) {
     return text
-        .replace(/ä/g, 'ae')
-        .replace(/ö/g, 'oe')
-        .replace(/ü/g, 'ue')
-        .replace(/ß/g, 'ss')
         .replace(/Ä/g, 'Ae')
+        .replace(/ä/g, 'ae')
+        .replace(/Á/g, 'A')
+        .replace(/á/g, 'a')
+        .replace(/À/g, 'A')
+        .replace(/à/g, 'a')
+        .replace(/Â/g, 'A')
+        .replace(/â/g, 'a')
+
+        .replace(/Č/g, 'C')
+        .replace(/č/g, 'c')
+        .replace(/Ç/g, 'C')
+        .replace(/ç/g, 'c')
+
+        .replace(/É/g, 'E')
+        .replace(/é/g, 'e')
+        .replace(/È/g, 'E')
+        .replace(/è/g, 'e')
+        .replace(/ë/g, 'e')
+
+        .replace(/Ğ/g, 'G')
+        .replace(/ğ/g, 'g')
+
+        .replace(/í/g, 'i')
+        .replace(/î/g, 'i')
+        .replace(/ï/g, 'i')
+
+        .replace(/Ñ/g, 'N')
+        .replace(/ñ/g, 'n')
+
         .replace(/Ö/g, 'Oe')
-        .replace(/Ü/g, 'Ue');
+        .replace(/ö/g, 'oe')
+        .replace(/ó/g, 'o')
+        .replace(/ô/g, 'o')
+
+        .replace(/Ř/g, 'R')
+        .replace(/ř/g, 'r')
+
+        .replace(/Š/g, 'S')
+        .replace(/š/g, 's')
+        .replace(/Ş/g, 'S')
+        .replace(/ş/g, 's')
+        .replace(/ß/g, 'ss')
+
+        .replace(/Ü/g, 'Ue')
+        .replace(/ü/g, 'ue')
+        .replace(/ú/g, 'u')
+        .replace(/û/g, 'u')
+
+        .replace(/Ž/g, 'Z')
+        .replace(/ž/g, 'z');
 }
 
 // Prüfe, ob das Dok bereits geöffnet ist
